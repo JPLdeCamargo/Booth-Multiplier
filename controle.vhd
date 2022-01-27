@@ -6,7 +6,7 @@ use ieee.std_logic_unsigned.all;
 entity controle is
 port(
 	clk, nZero, reset: in std_logic;
-	novoNum, acabou: out std_logic
+	novoNum, acabou, carga, cargaM: out std_logic
 	);
 end controle;
 
@@ -30,20 +30,28 @@ begin
     begin
         case eAtual is
             when start =>
-					 novoNum <= '1';
-					 acabou <= '0';
+				novoNum <= '1';
+				acabou <= '0';
+                carga <= '1';
+                cargaM <= '1';
                 eprox <= calcular;
             when calcular =>
-					 novoNum <= '0';
+				novoNum <= '0';
+                carga <= '1';
+                cargaM <= '0';
                 eProx <= checar;
             when checar => 
-					 novoNum <= '0';
+				novoNum <= '0';
+                carga <= '0';
+                cargaM <= '0';
                 if(nZero = '1') then
                     eProx <= fim;
                 else
                     eProx <= calcular;
                 end if;
             when fim =>
+                carga <= '0';
+                cargaM <= '0';
                 acabou <= '1';
                 eProx <= start;
         end case;

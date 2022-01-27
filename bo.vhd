@@ -7,11 +7,13 @@ entity bo is
     generic(X : natural := 4);
 	port (
 	    M, Q: in std_logic_vector(x - 1 downto 0);
-		clk, novoNum: in std_logic;
+		clk, novoNum, carga, cargaM: in std_logic;
 		S: out std_logic_vector(x + x - 1 downto 0);
         nZero: out std_logic;
         aShiftT, APT: out std_logic_vector(x-1 downto 0);
-        nT, npt: out std_logic_vector(3 downto 0)
+        nT, npt: out std_logic_vector(3 downto 0);
+        q0pt: out std_logic
+        
 	);
 end bo;
 
@@ -55,26 +57,24 @@ architecture arch of bo is
 	  q : OUT STD_LOGIC);
 	 END component;
 	 	
-	signal AP, QP, MP, Aula, qShift, mShift, mM, mQ, mN: std_logic_vector(x - 1 downto 0);
+	signal AP, QP, MP, Aula, qShift, mShift, mQ, mN: std_logic_vector(x - 1 downto 0);
     signal AShift: std_logic_vector (x - 1 downto 0) := (OTHERS => '0');
     signal Q0shift: std_logic := '0';
 	 signal Q0p: std_logic;
     signal entN: std_logic_vector(3 downto 0) := "0100"; 
     signal N, np: std_logic_vector(3 downto 0);
-    signal ulaop: std_logic_vector(1 downto 0);
 
 begin
 
 
     muxQ: mux port map (Qshift, Q, novoNum, mQ);
-    muxM: mux port map (Mshift, M, novoNum, mM);
     muxN: mux port map (np, entN, novoNum, mN);
-    regisA: registrador port map (clk, novoNum, '1', Ashift, AP);
-    regisQ: registrador port map (clk, '0', '1', mQ, QP);
-    regisM: registrador port map (clk, '0', '1', mM, MP);
-    regisQ0: registrador1bit port map (clk, novoNum, '1', q0shift, Q0P);
-    regisN: registrador port map (clk, '0', '1', mN, n);
-    ulaop <= Q(0) & Q0P;
+    regisA: registrador port map (clk, novoNum, carga, Ashift, AP);
+    regisQ: registrador port map (clk, '0', carga, mQ, QP);
+    regisM: registrador port map (clk, '0', cargaM, M, MP);
+    regisQ0: registrador1bit port map (clk, novoNum, carga, q0shift, Q0P);
+    regisN: registrador port map (clk, '0', carga, mN, n);
+
     ULA1: ula port map (AP, MP, Q(0) & Q0P, Aula);
     np <= n - 1;
     shiftRight1: shiftRight port map (Aula, Q, AShift, QShift, q0shift);
@@ -84,6 +84,7 @@ begin
     APT <= AP;
     nT <= n;
     npt <= np;
+    q0pT <= q0p;
 
 
 
