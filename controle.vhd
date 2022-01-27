@@ -1,11 +1,12 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
 
 entity controle is
 port(
-	clk, nZero, q1, q0, reset: in std_logic;
-	rst, novoNum, acabou: out std_logic;
-	selULA: in std_logic_vector (1 downto 0)
+	clk, nZero, reset: in std_logic;
+	novoNum, acabou: out std_logic
 	);
 end controle;
 
@@ -25,20 +26,17 @@ begin
         end if;
     end process;
     
-    COMB: process(eAtual, nZero, q1, q0)
+    COMB: process(eAtual, nZero)
     begin
         case eAtual is
             when start =>
-                rst <= '1';
 					 novoNum <= '1';
 					 acabou <= '0';
                 eprox <= calcular;
             when calcular =>
-                rst <= '0';
 					 novoNum <= '0';
                 eProx <= checar;
             when checar => 
-                rst <= '0';
 					 novoNum <= '0';
                 if(nZero = '1') then
                     eProx <= fim;

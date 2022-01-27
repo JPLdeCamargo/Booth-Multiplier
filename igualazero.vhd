@@ -1,10 +1,12 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
+
 
 ENTITY igualazero IS
-generic(x : natural := 3);
-PORT (a : IN STD_LOGIC_VECTOR(2 downto 0);
+generic(x : natural := 4);
+PORT (a : IN std_logic_vector(3 downto 0);
 igual : OUT STD_LOGIC);
 END igualazero;
 

@@ -1,12 +1,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
 
 entity ula is
 	generic(X : natural := 4);
 	port(A, M: in std_logic_vector(X-1 downto 0);
 	ulaop: in std_logic_vector(1 downto 0);
-	AP: out signed(X - 1 downto 0)
+	APo: out std_logic_vector(X - 1 downto 0)
 	);
 
 end ula;
@@ -24,5 +25,5 @@ with ulaop select
 				subtracao when "10",
 				A when others;
 				
-AP <= tempAP;				
+APo <= tempAP;				
 end arc;

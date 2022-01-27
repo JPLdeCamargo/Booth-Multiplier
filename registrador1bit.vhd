@@ -1,18 +1,15 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.std_logic_unsigned.all;
-use ieee.numeric_std.all;
 
-
-ENTITY registrador IS
-generic(X : natural := 4);
+ENTITY registrador1bit IS
 PORT (clk, reset, carga : IN STD_LOGIC;
-	  d : IN std_logic_vector(x - 1 DOWNTO 0);
-	  q : OUT std_logic_vector(x - 1 DOWNTO 0));
-END registrador;
+	  d : IN STD_LOGIC;
+	  q : OUT STD_LOGIC);
+END registrador1bit;
 
-ARCHITECTURE estrutura OF registrador is
-signal zero: std_logic_vector(x - 1 downto 0) := (OTHERS => '0');
+ARCHITECTURE estrutura OF registrador1bit is
+signal zero: std_logic := '0';
 BEGIN
 	PROCESS(clk, reset)
 	BEGIN
