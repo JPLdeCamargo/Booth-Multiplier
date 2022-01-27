@@ -11,7 +11,8 @@ entity trabalhoGrupo is
 		S: out std_logic_vector(x + x - 1 downto 0);
         acabou: out std_logic;
 		aShiftT, APT: out std_logic_vector(x-1 downto 0);
-		nT, npt: out std_logic_vector(3 downto 0)
+		nT, npt: out std_logic_vector(3 downto 0);
+		novoNumT: out std_logic
 	);
 end trabalhoGrupo;
 
@@ -41,7 +42,7 @@ begin
 
     bo1: bo port map (M, Q, clk, novoNum, S, nZero, aShiftT, APT, nT, nPt);
     bc1: controle port map (clk, nZero, reset, novoNum, acabou);
-
+	novoNumT <= novoNum;
    
 
 end arch;
