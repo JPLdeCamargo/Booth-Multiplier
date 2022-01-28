@@ -6,12 +6,13 @@ use ieee.std_logic_unsigned.all;
 entity controle is
 port(
 	clk, nZero, reset: in std_logic;
-	novoNum, acabou, carga, cargaM: out std_logic
+	novoNum, acabou, carga, cargaM: out std_logic;
+    statesT: out std_logic_vector (1 downto 0)
 	);
 end controle;
 
 architecture Controlearc of controle is
-    type STATES is (start, calcular, checar, fim);
+    type STATES is (start, setup, calcular, checar);
     signal eProx, eAtual: STATES;
     
 
@@ -30,30 +31,37 @@ begin
     begin
         case eAtual is
             when start =>
+                statesT <= "00";
+                novoNum <= '0';
+                acabou <= '1';
+                carga <= '0';
+                cargaM <= '0';
+                eprox <= setup;
+            when setup =>
+                statesT <= "01";
 				novoNum <= '1';
 				acabou <= '0';
                 carga <= '1';
                 cargaM <= '1';
                 eprox <= calcular;
             when calcular =>
+                statesT <= "10";
+                acabou <= '0';
 				novoNum <= '0';
                 carga <= '1';
                 cargaM <= '0';
                 eProx <= checar;
             when checar => 
+                statesT <= "11";
+                acabou <= '0';
 				novoNum <= '0';
                 carga <= '0';
                 cargaM <= '0';
                 if(nZero = '1') then
-                    eProx <= fim;
+                    eProx <= start;
                 else
                     eProx <= calcular;
                 end if;
-            when fim =>
-                carga <= '0';
-                cargaM <= '0';
-                acabou <= '1';
-                eProx <= start;
         end case;
     end process;
 end Controlearc;

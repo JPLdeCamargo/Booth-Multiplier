@@ -13,7 +13,8 @@ entity trabalhoGrupo is
 		aShiftT, APT: out std_logic_vector(x-1 downto 0);
 		nT, npt: out std_logic_vector(3 downto 0);
 		novoNumT: out std_logic;
-		q0pt: out std_logic
+		q0pt: out std_logic;
+		statesT: out std_logic_vector (1 downto 0)
 	);
 end trabalhoGrupo;
 
@@ -34,7 +35,8 @@ architecture arch of trabalhoGrupo is
     component controle
     port(
 	clk, nZero, reset: in std_logic;
-	novoNum, acabou, carga, cargaM: out std_logic
+	novoNum, acabou, carga, cargaM: out std_logic;
+	statesT: out std_logic_vector (1 downto 0)
 	);
     end component;
 	 	
@@ -43,7 +45,7 @@ signal novoNum, nZero, carga, cargaM: std_logic;
 begin
 
     bo1: bo port map (M, Q, clk, novoNum, carga, cargaM, S, nZero, aShiftT, APT, nT, nPt, q0pt);
-    bc1: controle port map (clk, nZero, reset, novoNum, acabou, carga, cargaM);
+    bc1: controle port map (clk, nZero, reset, novoNum, acabou, carga, cargaM, statesT);
 	novoNumT <= novoNum;
    
 

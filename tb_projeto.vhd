@@ -11,10 +11,11 @@ architecture tb of tb_projeto is
     signal S: std_logic_vector (7 downto 0);
     signal clk, reset, acabou, novonumT: std_logic;
     signal q0pt: std_logic;
-    constant clk_period: time := 20ns;
+    signal statesT: std_logic_vector (1 downto 0);
+    constant clk_period: time := 40ns;
 begin
     UUT : entity work.trabalhoGrupo port map 
-	            (M, Q, clk, reset, S, acabou, AshiftT, APT, nt, npt, novoNumT, q0pt);
+	            (M, Q, clk, reset, S, acabou, AshiftT, APT, nt, npt, novoNumT, q0pt, statesT);
     reset <= '1', '0' after 50 ns; 
     M <= "1001";
     Q <= "0011";
