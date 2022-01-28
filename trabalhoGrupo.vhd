@@ -28,7 +28,8 @@ architecture arch of trabalhoGrupo is
         nZero: out std_logic;
         aShiftT, APT: out std_logic_vector(x-1 downto 0);
         nT, npt: out std_logic_vector(3 downto 0);
-		q0pt: out std_logic
+        q0pt: out std_logic
+        
 	);
 	end component;
 

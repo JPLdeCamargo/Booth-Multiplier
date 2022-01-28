@@ -63,6 +63,7 @@ architecture arch of bo is
 	 signal Q0p: std_logic;
     signal entN: std_logic_vector(3 downto 0) := "0100"; 
     signal N, np: std_logic_vector(3 downto 0);
+    signal ulaop: std_logic_vector (1 downto 0);
 
 begin
 
@@ -74,10 +75,10 @@ begin
     regisM: registrador port map (clk, '0', cargaM, M, MP);
     regisQ0: registrador1bit port map (clk, novoNum, carga, q0shift, Q0P);
     regisN: registrador port map (clk, '0', carga, mN, n);
-
-    ULA1: ula port map (AP, MP, Q(0) & Q0P, Aula);
+    ulaop <= QP(0) & Q0P;
+    ULA1: ula port map (AP, MP, ulaop, Aula);
     np <= n - 1;
-    shiftRight1: shiftRight port map (Aula, Q, AShift, QShift, q0shift);
+    shiftRight1: shiftRight port map (Aula, QP, AShift, QShift, q0shift);
     S <= AP & QP;
     igualazero1: igualazero port map (n, nZero);
     aShiftT <= ashift;
@@ -85,6 +86,7 @@ begin
     nT <= n;
     npt <= np;
     q0pT <= q0p;
+    
 
 
 
