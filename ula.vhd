@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 
 entity ula is
-	generic(X : natural := 4);
+	generic (X : natural := 4);
 	port(A, M: in std_logic_vector(X-1 downto 0);
 	ulaop: in std_logic_vector(1 downto 0);
 	APo: out std_logic_vector(X - 1 downto 0)
